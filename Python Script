@@ -1,0 +1,47 @@
+#!/usr/bin/env python3
+
+# Import the necessary libraries
+import subprocess
+from tkinter import *
+
+# Define the function to enable or disable the night light
+def set_night_light(enabled):
+    # Check if the night light is enabled or disabled
+    if enabled:
+        # Set the command to enable the night light
+        command = 'gsettings set org.gnome.settings-daemon.plugins.color night-light-enabled true'
+    else:
+        # Set the command to disable the night light
+        command = 'gsettings set org.gnome.settings-daemon.plugins.color night-light-enabled false'
+
+    # Run the command to enable or disable the night light
+    subprocess.run(command.split())
+
+# Define the function to toggle the night light
+def toggle_night_light():
+    # Check if the night light is currently enabled
+    if night_light_enabled.get() == 1:
+        # Disable the night light
+        set_night_light(False)
+    else:
+        # Enable the night light
+        set_night_light(True)
+
+# Create the GUI
+root = Tk()
+root.title('Night Light')
+
+# Create a variable to store the night light state
+night_light_enabled = IntVar()
+
+# Create the Checkbutton to enable or disable the night light
+cb_night_light = Checkbutton(
+    root,
+    text='Night Light',
+    variable=night_light_enabled,
+    command=toggle_night_light
+)
+cb_night_light.pack()
+
+# Run the GUI
+root.mainloop()
